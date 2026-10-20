@@ -1,7 +1,20 @@
 import Link from "next/link";
 import { getNotes } from "../services/notes";
+import { Suspense } from "react";
 
-const Notes = async ({
+export default function Page({
+  params,
+}: {
+  params: Promise<{ important?: string }>;
+}) {
+  return (
+    <Suspense>
+      <NoteContent searchParams={params} />
+    </Suspense>
+  );
+}
+
+const NoteContent = async ({
   searchParams,
 }: {
   searchParams: Promise<{ important?: string }>;
@@ -30,4 +43,3 @@ const Notes = async ({
     </div>
   );
 };
-export default Notes;

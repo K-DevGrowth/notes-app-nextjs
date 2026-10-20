@@ -1,8 +1,17 @@
 import { toggleNoteImportant } from "@/app/actions/notes";
 import { getNoteById } from "@/app/services/notes";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
-const NotePage = async ({ params }: { params: Promise<{ id: number }> }) => {
+export default function Page({ params }: { params: Promise<{ id: number }> }) {
+  return (
+    <Suspense>
+      <NoteContent params={params} />
+    </Suspense>
+  );
+}
+
+const NoteContent = async ({ params }: { params: Promise<{ id: number }> }) => {
   const { id } = await params;
   const note = getNoteById(Number(id));
 
@@ -23,5 +32,3 @@ const NotePage = async ({ params }: { params: Promise<{ id: number }> }) => {
     </div>
   );
 };
-
-export default NotePage;
